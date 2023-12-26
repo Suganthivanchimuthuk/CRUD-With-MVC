@@ -12,7 +12,7 @@ namespace DapperDataAccessLayer
         public VehicleInfo InsertSP(VehicleInfo VehicleInfo);
         public IEnumerable<VehicleInfo> GetVehicleInfoSP();
         public VehicleInfo UpdateVehicleInfoSP(long Id, VehicleInfo P);
-
+        public VehicleInfo ReadVehicleInfoByNumber(long id);
         public void DeleteVehicleInfoSP(long id);
 
     }

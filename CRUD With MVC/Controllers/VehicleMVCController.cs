@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DapperDataAccessLayer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,31 +10,39 @@ namespace CRUD_With_MVC.Controllers
 {
     public class VehicleMVCController : Controller
     {
-        // GET: VehicleMVCController
-        public ActionResult Index()
+        public readonly IVehicleInfoRepository obj;
+        public VehicleMVCController()
         {
-            return View();
+            obj = new VehicleInfoRepository();
+        }
+        // GET: VehicleMVCController
+        public ActionResult Index(int id)
+        {
+            var res = obj.ReadVehicleInfoByNumber(id);
+            return View("Edit",res);
         }
 
         // GET: VehicleMVCController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var resu = obj.ReadVehicleInfoByNumber(id);
+            return View("Details",resu);
         }
 
         // GET: VehicleMVCController/Create
         public ActionResult Create()
         {
-            return View();
+            return View("create",new VehicleInfo());
         }
 
         // POST: VehicleMVCController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(VehicleInfo value)
         {
             try
             {
+                obj.InsertSP(value);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -45,16 +54,18 @@ namespace CRUD_With_MVC.Controllers
         // GET: VehicleMVCController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var res = obj.ReadVehicleInfoByNumber(id);
+            return View("Edit",res);
         }
 
         // POST: VehicleMVCController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, VehicleInfo values)
         {
             try
             {
+                obj.UpdateVehicleInfoSP(id, values);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -66,16 +77,18 @@ namespace CRUD_With_MVC.Controllers
         // GET: VehicleMVCController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var num = obj.ReadVehicleInfoByNumber(id);
+            return View("Delete",num);
         }
 
         // POST: VehicleMVCController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteByNumber(int id)
         {
             try
             {
+                obj.DeleteVehicleInfoSP(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

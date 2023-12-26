@@ -86,22 +86,47 @@ namespace DapperDataAccessLayer
                     throw;
                 }
             }
-            public VehicleInfo UpdateVehicleInfoSP(long id, VehicleInfo VI)
+        public VehicleInfo UpdateVehicleInfoSP(long id, VehicleInfo VI)
+        {
+            try
             {
+                var connectionString = "Data source=desktop-blbgehj\\sqlexpress;initial catalog=batch7;user id=sa;password=Anaiyaan@123;";
+
+                var con = new SqlConnection(connectionString);
+                con.Open();
+                var UpdateQuery = $"exec  VehicleInfoUpdate {id},'{VI.Name}',{VI.VehicleNumber},{VI.RCNumber},{VI.OwnerPhNo},'{VI.PurchaseDate.ToString("MM-dd-yyyy")}'";
+                var VehicleInfo = con.QueryFirstOrDefault<VehicleInfo>(UpdateQuery);
+                Console.WriteLine(UpdateQuery);
+                con.Close();
+                return VehicleInfo;
+
+            }
+            catch (SqlException sql)
+            {
+                throw;
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+                 public VehicleInfo ReadVehicleInfoByNumber(long id)
+            {
+
                 try
                 {
                     var connectionString = "Data source=desktop-blbgehj\\sqlexpress;initial catalog=batch7;user id=sa;password=Anaiyaan@123;";
 
                     var con = new SqlConnection(connectionString);
                     con.Open();
-                    var UpdateQuery = $"exec  VehicleInfoUpdate {id},'{VI.Name}',{VI.VehicleNumber},{VI.RCNumber},{VI.OwnerPhNo},'{VI.PurchaseDate.ToString("MM-dd-yyyy")}'";
-                    var VehicleInfo = con.QueryFirstOrDefault<VehicleInfo>(UpdateQuery);
-                    Console.WriteLine(UpdateQuery);
+                    var selectQuery=$"exec  ReadVehicleInfoByNumber{id}";
+                    var Find = con.QueryFirstOrDefault<VehicleInfo>(selectQuery);
                     con.Close();
-                    return VehicleInfo;
+                return Find;
 
                 }
-                catch (SqlException sql)
+                catch (SqlException Sql)
                 {
                     throw;
 
@@ -110,6 +135,12 @@ namespace DapperDataAccessLayer
                 {
                     throw;
                 }
+
+
+                
+            
+
+            
 
             }
 
