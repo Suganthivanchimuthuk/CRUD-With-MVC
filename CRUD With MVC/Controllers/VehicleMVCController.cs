@@ -25,8 +25,8 @@ namespace CRUD_With_MVC.Controllers
         // GET: VehicleMVCController/Details/5
         public ActionResult Details(int id)
         {
-            var resu = obj.ReadVehicleInfoByNumber(id);
-            return View("Details",resu);
+            var result = obj.ReadVehicleInfoByNumber(id);
+            return View("Details",result);
         }
 
         // GET: VehicleMVCController/Create
