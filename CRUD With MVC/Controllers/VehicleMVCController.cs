@@ -16,29 +16,29 @@ namespace CRUD_With_MVC.Controllers
             obj = new VehicleInfoRepository();
         }
         // GET: VehicleMVCController
-        public ActionResult Index(int id)
+        public ActionResult Index()
         {
-            var res = obj.ReadVehicleInfoByNumber(id);
-            return View("Edit",res);
+            var res = obj.GetVehicleInfoSP();
+            return View("List",res);
         }
 
         // GET: VehicleMVCController/Details/5
         public ActionResult Details(int id)
         {
             var result = obj.ReadVehicleInfoByNumber(id);
-            return View("Details",result);
+            return View("ReadByNumber",result);
         }
 
         // GET: VehicleMVCController/Create
         public ActionResult Create()
         {
-            return View("create",new VehicleInfo());
+            return View("Create",new VehicleInfo());
         }
 
         // POST: VehicleMVCController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(VehicleInfo value)
+        public ActionResult Created(VehicleInfo value)
         {
             try
             {
@@ -52,10 +52,10 @@ namespace CRUD_With_MVC.Controllers
         }
 
         // GET: VehicleMVCController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(long id)
         {
             var res = obj.ReadVehicleInfoByNumber(id);
-            return View("Edit",res);
+            return View("Update",res);
         }
 
         // POST: VehicleMVCController/Edit/5
@@ -84,11 +84,11 @@ namespace CRUD_With_MVC.Controllers
         // POST: VehicleMVCController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteByNumber(int id)
+        public ActionResult Deletebynum(int Id)
         {
             try
             {
-                obj.DeleteVehicleInfoSP(id);
+                obj.DeleteVehicleInfoSP(Id);
                 return RedirectToAction(nameof(Index));
             }
             catch
