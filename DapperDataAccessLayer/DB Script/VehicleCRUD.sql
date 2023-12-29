@@ -13,7 +13,7 @@ CREATE TABLE [VehicleInfo]
 drop table VehicleInfo
 select * from VehicleInfo
 
-
+go
 
 --STORED PROCEDURE--
 
@@ -34,6 +34,7 @@ exec VehicleInfoInsert 'Jupiter',10,'TN57Y5467',9856454434,'09-27-2023'
 select * from VehicleInfo
 drop procedure VehicleInfoInsert
 
+go
 --UPDATE--
 create procedure VehicleInfoUpdate
 (@id bigint ,@Name varchar(100),@VehicleNumber bigint,@RCNumber nvarchar(100),@OwnerPhNo bigint,@PurchaseDate datetime2(7))
@@ -44,6 +45,7 @@ end
 
 exec VehicleInfoUpdate 2 ,'TVS',21,'TN57X6789',6369176269,'09-12-2023'
 select * from VehicleInfo
+go
 ---DELETE---
 create procedure VehicleInfoDelete
 (@id bigint)
@@ -53,6 +55,7 @@ delete from VehicleInfo where Id=@Id
 end
 exec VehicleInfoDelete 2
 
+go
 -- READ NUMBER---
 
 create procedure ReadVehicleInfo

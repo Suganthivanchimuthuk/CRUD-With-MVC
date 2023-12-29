@@ -5,92 +5,100 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using System.Data.SqlClient;
-
+using Microsoft.Extensions.Configuration;
+using DapperDataAccessLayer;
 
 namespace DapperDataAccessLayer
 {
-        public class VehicleInfoRepository : IVehicleInfoRepository
+    public class VehicleInfoRepository : IVehicleInfoRepository
+    {
+
+        public string connectionString;
+
+
+        public VehicleInfoRepository(IConfiguration configuration)
+        {
+            connectionString = configuration.GetConnectionString("DbConnection");
+        }
+        public VehicleInfo InsertSP(VehicleInfo VehicleInfo)
 
         {
-            public VehicleInfo InsertSP(VehicleInfo VehicleInfo)
 
+            try
             {
+                //var connectionString = "Data source=desktop-blbgehj\\sqlexpress;initial catalog=batch7;user id=sa;password=Anaiyaan@123;";
 
-                try
-                {
-                    var connectionString = "Data source=desktop-blbgehj\\sqlexpress;initial catalog=batch7;user id=sa;password=Anaiyaan@123;";
+                var con = new SqlConnection(connectionString);
+                con.Open();
+                con.Execute($"exec VehicleInfoInsert '{VehicleInfo.Name}',{VehicleInfo.VehicleNumber},'{VehicleInfo.RCNumber}',{VehicleInfo.OwnerPhNo},'{VehicleInfo.PurchaseDate}'");
+                con.Close();
 
-                    var con = new SqlConnection(connectionString);
-                    con.Open();
-                    con.Execute($"exec VehicleInfoInsert '{VehicleInfo.Name}',{VehicleInfo.VehicleNumber},'{VehicleInfo.RCNumber}',{VehicleInfo.OwnerPhNo},'{VehicleInfo.PurchaseDate}'");
-                    con.Close();
+            }
+            catch (SqlException Sql)
+            {
+                throw;
 
-                }
-                catch (SqlException Sql)
-                {
-                    throw;
-
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
-
-
-                return VehicleInfo;
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
 
-            public IEnumerable<VehicleInfo> GetVehicleInfoSP()
+
+            return VehicleInfo;
+        }
+
+        public IEnumerable<VehicleInfo> GetVehicleInfoSP()
+        {
+            try
             {
-                try
-                {
-                    var connectionString = "Data source=desktop-blbgehj\\sqlexpress;initial catalog=batch7;user id=sa;password=Anaiyaan@123;";
+                //  var connectionString = "Data source=desktop-blbgehj\\sqlexpress;initial catalog=batch7;user id=sa;password=Anaiyaan@123;";
 
-                    var con = new SqlConnection(connectionString);
-                    con.Open();
-                    var product = con.Query<VehicleInfo>($"exec ReadVehicleInfo");
-                    con.Close();
-                    return product.ToList();
+                var con = new SqlConnection(connectionString);
+                con.Open();
+                var product = con.Query<VehicleInfo>($"exec ReadVehicleInfo");
+                con.Close();
+                return product.ToList();
 
-                }
-                catch (SqlException sql)
-                {
-                    throw;
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
             }
-
-            public void DeleteVehicleInfoSP(long id)
+            catch (SqlException sql)
             {
-                try
-                {
-                    var connectionString = "Data source=desktop-blbgehj\\sqlexpress;initial catalog=batch7;user id=sa;password=Anaiyaan@123;";
-
-                    var con = new SqlConnection(connectionString);
-                    con.Open();
-                    var DeleteQuery = $" exec VehicleInfoDelete {id}";
-                    con.Execute(DeleteQuery);
-                    con.Close();
-
-
-                }
-                catch (SqlException sql)
-                {
-                    throw;
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
+                throw;
             }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public void DeleteVehicleInfoSP(long id)
+        {
+            try
+            {
+                //   var connectionString = "Data source=desktop-blbgehj\\sqlexpress;initial catalog=batch7;user id=sa;password=Anaiyaan@123;";
+
+                var con = new SqlConnection(connectionString);
+                con.Open();
+                var DeleteQuery = $" exec VehicleInfoDelete {id}";
+                con.Execute(DeleteQuery);
+                con.Close();
+
+
+            }
+            catch (SqlException sql)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
         public VehicleInfo UpdateVehicleInfoSP(long id, VehicleInfo VI)
         {
             try
             {
-                var connectionString = "Data source=desktop-blbgehj\\sqlexpress;initial catalog=batch7;user id=sa;password=Anaiyaan@123;";
+                //  var connectionString = "Data source=desktop-blbgehj\\sqlexpress;initial catalog=batch7;user id=sa;password=Anaiyaan@123;";
 
                 var con = new SqlConnection(connectionString);
                 con.Open();
@@ -111,45 +119,35 @@ namespace DapperDataAccessLayer
                 throw;
             }
         }
-                 public VehicleInfo ReadVehicleInfoByNumber(long id)
-            {
+        public VehicleInfo ReadVehicleInfoByNumber(long id)
+        {
 
-                try
-                {
-                    var connectionString = "Data source=desktop-blbgehj\\sqlexpress;initial catalog=batch7;user id=sa;password=Anaiyaan@123;";
+            try
+            {
+                //  var connectionString = "Data source=desktop-blbgehj\\sqlexpress;initial catalog=batch7;user id=sa;password=Anaiyaan@123;";
                 var con = new SqlConnection(connectionString);
-                    con.Open();
-                    var selectQuery=$"exec  FindByNum {id}";
-                    var Find = con.QueryFirstOrDefault<VehicleInfo>(selectQuery);
-                    con.Close();
+                con.Open();
+                var selectQuery = $"exec  FindByNum {id}";
+                var Find = con.QueryFirstOrDefault<VehicleInfo>(selectQuery);
+                con.Close();
                 return Find;
 
-                }
-                catch (SqlException Sql)
-                {
-                    throw;
-
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
-
-
-                
-            
-
-            
+            }
+            catch (SqlException Sql)
+            {
+                throw;
 
             }
-
-
-
-
-
+            catch (Exception ex)
+            {
+                throw;
+            }
 
         }
+
     }
+}
+    
 
 
 

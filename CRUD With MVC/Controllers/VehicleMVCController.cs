@@ -1,6 +1,7 @@
 ﻿using DapperDataAccessLayer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,53 +11,87 @@ namespace CRUD_With_MVC.Controllers
 {
     public class VehicleMVCController : Controller
     {
-        public readonly IVehicleInfoRepository obj;
-        public VehicleMVCController()
+        private readonly IVehicleInfoRepository _obj;
+        private readonly String _configuration;
+        public VehicleMVCController(IVehicleInfoRepository result, IConfiguration configuration)
         {
-            obj = new VehicleInfoRepository();
+
+            _obj = result;
+            _configuration = configuration.GetConnectionString("DbConnection");
         }
         // GET: VehicleMVCController
         public ActionResult Index()
         {
-            var res = obj.GetVehicleInfoSP();
-            return View("List",res);
+            try
+            {
+                var res = _obj.GetVehicleInfoSP();
+                return View("List", res);
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
 
         // GET: VehicleMVCController/Details/5
         public ActionResult Details(int id)
         {
-            var result = obj.ReadVehicleInfoByNumber(id);
-            return View("ReadByNumber",result);
-        }
-
-        // GET: VehicleMVCController/Create
-        public ActionResult Create()
-        {
-            return View("Create",new VehicleInfo());
-        }
-
-        // POST: VehicleMVCController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Created(VehicleInfo value)
-        {
             try
             {
-                obj.InsertSP(value);
-                return RedirectToAction(nameof(Index));
+                var result = _obj.ReadVehicleInfoByNumber(id);
+                return View("Details", result);
             }
             catch
             {
-                return View();
+                return View("Error");
+
             }
         }
+
+
+            // GET: VehicleMVCController/Create
+        public ActionResult Create()
+        {
+                try
+                {
+                    return View("Create", new VehicleInfo());
+                }
+                catch
+                {
+                    return View("Error");
+                }
+         }
+
+            // POST: VehicleMVCController/Create
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+         public ActionResult Created(VehicleInfo value)
+         {
+                try
+                {
+                    _obj.InsertSP(value);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    return View("Error");
+                }
+         }
 
         // GET: VehicleMVCController/Edit/5
         public ActionResult Edit(long id)
         {
-            var res = obj.ReadVehicleInfoByNumber(id);
-            return View("Update",res);
+            try
+            {
+                var res = _obj.ReadVehicleInfoByNumber(id);
+                return View("Edit", res);
+            }
+            catch
+            {
+                return View("Error");
+            } 
         }
+
 
         // POST: VehicleMVCController/Edit/5
         [HttpPost]
@@ -65,36 +100,46 @@ namespace CRUD_With_MVC.Controllers
         {
             try
             {
-                obj.UpdateVehicleInfoSP(id, values);
+                _obj.UpdateVehicleInfoSP(id, values);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View("Error");
             }
         }
+
 
         // GET: VehicleMVCController/Delete/5
         public ActionResult Delete(int id)
         {
-            var num = obj.ReadVehicleInfoByNumber(id);
-            return View("Delete",num);
-        }
-
-        // POST: VehicleMVCController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Deletebynum(int Id)
-        {
             try
             {
-                obj.DeleteVehicleInfoSP(Id);
-                return RedirectToAction(nameof(Index));
+                var num = _obj.ReadVehicleInfoByNumber(id);
+                return View("Delete", num);
             }
             catch
             {
-                return View();
+                return View("Error");
             }
         }
+
+            // POST: VehicleMVCController/Delete/5
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+        public ActionResult Deletebynum(int id)
+        {
+           try
+           {
+                  _obj.DeleteVehicleInfoSP(id);
+                  return RedirectToAction(nameof(Index));
+           }
+            catch
+           {
+                      return View("Error");
+           }
+        }
     }
+            
 }
+            
