@@ -12,12 +12,15 @@ namespace CRUD_With_MVC.Controllers
     public class VehicleMVCController : Controller
     {
         private readonly IVehicleInfoRepository _obj;
-        private readonly String _configuration;
-        public VehicleMVCController(IVehicleInfoRepository result, IConfiguration configuration)
+        private readonly ILocationRepository _loc;
+        private readonly string _connectionstring;
+      
+        public VehicleMVCController(IVehicleInfoRepository result, IConfiguration configuration,ILocationRepository loc)
         {
 
             _obj = result;
-            _configuration = configuration.GetConnectionString("DbConnection");
+            _loc = loc;
+            _connectionstring = configuration.GetConnectionString("DbConnection");
         }
         // GET: VehicleMVCController
         public ActionResult Index()

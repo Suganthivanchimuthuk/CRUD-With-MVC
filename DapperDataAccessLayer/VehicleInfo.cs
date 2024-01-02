@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DapperDataAccessLayer
@@ -23,6 +24,8 @@ namespace DapperDataAccessLayer
 
         [Required(ErrorMessage = "Please Enter PurchaseDate")]
         public DateTime PurchaseDate { get; set; }
+        public long LocationId { get; set; }
+        public List<Location>Locations { get; set; }
     }    
 
 }

@@ -25,6 +25,7 @@ namespace CRUD_With_MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IVehicleInfoRepository, VehicleInfoRepository>();
+            services.AddTransient<ILocationRepository, LocationRepository>();
             services.AddControllersWithViews();
         }
             
