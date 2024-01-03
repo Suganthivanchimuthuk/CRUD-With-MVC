@@ -11,8 +11,8 @@ namespace DapperDataAccessLayer
 {
     public class LocationRepository : ILocationRepository
     {
-         string connectionString;
-        
+        string connectionString;
+
 
         public LocationRepository(IConfiguration configuration)
         {
@@ -24,9 +24,10 @@ namespace DapperDataAccessLayer
             {
                 var con = new SqlConnection(connectionString);
                 con.Open();
-                var output = con.Query<Location>($"exec LocationDetails");
+                var selectQuery = $"select LocationId,LocationName from Locations";
+                var list = con.Query<Location>(selectQuery);
                 con.Close();
-                return output.ToList();
+                return list.ToList();
             }
 
             catch (SqlException Sql)
@@ -39,5 +40,29 @@ namespace DapperDataAccessLayer
                 throw;
             }
         }
+        public VehicleInfo UpdateLocation(long id, VehicleInfo VI)
+        {
+            try
+            {
+
+                var con = new SqlConnection(connectionString);
+                con.Open();
+                var UpdateQuery = $"Update  VehicleInfo {id},'{VI.Name}',{VI.VehicleNumber},{VI.RCNumber},{VI.OwnerPhNo},'{VI.PurchaseDate.ToString("MM-dd-yyyy")},'{VI.LocationId} where Id={id}";
+                var result = con.QueryFirstOrDefault<VehicleInfo>(UpdateQuery);
+                con.Close();
+                return result;
+
+            }
+            catch (SqlException sql)
+            {
+                throw;
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+                }
     }
 }
+

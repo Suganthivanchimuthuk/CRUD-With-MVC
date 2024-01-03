@@ -55,14 +55,10 @@ namespace CRUD_With_MVC.Controllers
             // GET: VehicleMVCController/Create
         public ActionResult Create()
         {
-                try
-                {
-                    return View("Create", new VehicleInfo());
-                }
-                catch
-                {
-                    return View("Error");
-                }
+           
+            var get = new VehicleInfo();
+            get.Locations = _loc.GetAllLocations().ToList();
+            return View("Create", get);
          }
 
             // POST: VehicleMVCController/Create
@@ -86,8 +82,9 @@ namespace CRUD_With_MVC.Controllers
         {
             try
             {
-                var res = _obj.ReadVehicleInfoByNumber(id);
-                return View("Edit", res);
+                var get = _obj.ReadVehicleInfoByNumber(id);
+                get.Locations = _loc.GetAllLocations().ToList();
+                return View("Edit", get);
             }
             catch
             {

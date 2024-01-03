@@ -30,7 +30,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.PurchaseDate)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.LocationId)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -55,9 +57,12 @@
                 @Html.DisplayFor(modelItem => item.PurchaseDate)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new {  id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.Id })
+                @Html.DisplayFor(modelItem => item.LocationId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>
 }

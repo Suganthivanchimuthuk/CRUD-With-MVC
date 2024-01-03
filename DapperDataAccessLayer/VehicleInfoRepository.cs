@@ -30,7 +30,7 @@ namespace DapperDataAccessLayer
 
                 var con = new SqlConnection(connectionString);
                 con.Open();
-                con.Execute($"exec VehicleInfoInsert '{Location.LocationId}'{VehicleInfo.Name}',{VehicleInfo.VehicleNumber},'{VehicleInfo.RCNumber}',{VehicleInfo.OwnerPhNo},'{VehicleInfo.PurchaseDate}'");
+                con.Execute($"exec VehicleInfoInsert '{VehicleInfo.Name}',{VehicleInfo.VehicleNumber},'{VehicleInfo.RCNumber}',{VehicleInfo.OwnerPhNo},'{VehicleInfo.PurchaseDate}',{VehicleInfo.LocationId}");
                 con.Close();
 
             }

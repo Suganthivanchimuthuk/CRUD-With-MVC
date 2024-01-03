@@ -9,5 +9,6 @@ namespace DapperDataAccessLayer
     public interface ILocationRepository
     {
         public IEnumerable<Location> GetAllLocations();
+        public VehicleInfo UpdateLocation(long id, VehicleInfo VI);
     }
 }

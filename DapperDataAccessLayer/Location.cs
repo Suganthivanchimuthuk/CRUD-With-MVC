@@ -8,7 +8,6 @@ namespace DapperDataAccessLayer
 {
     public class Location
     {
-        public static object LocationId { get; internal set; }
         public long LocationID { get; set; }
         public string LocationName { get; set; }
     }
