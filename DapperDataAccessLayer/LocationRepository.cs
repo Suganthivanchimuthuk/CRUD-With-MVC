@@ -24,7 +24,7 @@ namespace DapperDataAccessLayer
             {
                 var con = new SqlConnection(connectionString);
                 con.Open();
-                var selectQuery = $"select LocationId,LocationName from Locations";
+                var selectQuery = $"select LocationId,LocationName from Location";
                 var list = con.Query<Location>(selectQuery);
                 con.Close();
                 return list.ToList();

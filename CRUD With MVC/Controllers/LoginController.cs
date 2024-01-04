@@ -1,11 +1,126 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CRUD_With_MVC.Controllers
 {
-    public class LoginController
+    public class login
     {
+        
+        public string EmailId { get; set; }
+        public string Password { get; set; }
+
+    }
+    public class LoginController : Controller
+    {
+        private readonly string EmailId;
+        private readonly string Password;
+      
+        public LoginController(IConfiguration configuration)
+        {
+            EmailId = configuration.GetValue<string>("Login:Username");
+            Password = configuration.GetValue<string>("Login:Password");
+
+        }
+        // GET: LoginController
+        public ActionResult Index()
+        {
+            return View("LoginPage");
+        }
+
+        public ActionResult Authentication(login log)
+        {
+            try
+            {
+                
+                if (log.EmailId ==EmailId && log.Password ==Password)
+                {
+                    return Redirect("/VehicleMVC/index");
+                }
+                else
+                {
+                    ModelState.AddModelError("Password","Invalid EmailId or password");
+                    return View("LoginPage");
+                }
+            
+            }
+            catch
+            {
+                return View("Error");
+            }
+        }
+
+        // GET: LoginController1/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
+        // GET: LoginController1/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: LoginController1/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: LoginController1/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        // POST: LoginController1/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: LoginController1/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        // POST: LoginController1/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }

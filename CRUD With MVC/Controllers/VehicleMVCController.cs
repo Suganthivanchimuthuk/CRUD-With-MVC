@@ -14,6 +14,7 @@ namespace CRUD_With_MVC.Controllers
         private readonly IVehicleInfoRepository _obj;
         private readonly ILocationRepository _loc;
         private readonly string _connectionstring;
+        
       
         public VehicleMVCController(IVehicleInfoRepository result, IConfiguration configuration,ILocationRepository loc)
         {
