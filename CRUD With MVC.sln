@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.34031.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD With MVC", "CRUD With MVC\CRUD With MVC.csproj", "{93A76AE7-2EF5-4FC7-BFBA-0EB50706720E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUDWithMVC", "CRUD With MVC\CRUDWithMVC.csproj", "{93A76AE7-2EF5-4FC7-BFBA-0EB50706720E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperDataAccessLayer", "DapperDataAccessLayer\DapperDataAccessLayer.csproj", "{C3B335C7-6C88-4F9F-B20D-1CDB93BB1473}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DapperDataAccessLayer", "DapperDataAccessLayer\DapperDataAccessLayer.csproj", "{C3B335C7-6C88-4F9F-B20D-1CDB93BB1473}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

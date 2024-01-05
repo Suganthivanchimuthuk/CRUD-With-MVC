@@ -62,7 +62,8 @@ namespace DapperDataAccessLayer
             {
                 throw;
             }
-                }
+        }
+                
     }
 }
 
