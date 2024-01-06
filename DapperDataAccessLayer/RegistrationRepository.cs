@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DapperDataAccessLayer
 {
-     public class RegistrationRepository:IRegistrationRepository
+    public class RegistrationRepository : IRegistrationRepository
     {
 
         private readonly SampleDbContext _context;
@@ -21,7 +21,7 @@ namespace DapperDataAccessLayer
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Registration> GetAllRegistration()
+        public IEnumerable<Registration> GetRegistrations()
         {
             throw new NotImplementedException();
         }
@@ -30,12 +30,20 @@ namespace DapperDataAccessLayer
         {
             try
             {
-                _context.Database.ExecuteSqlRaw("sp");
+                _context.Database.ExecuteSqlRaw($" exec Insertdata '{reg.UserName}','{reg.Password}'");
             }
             catch (Exception ex)
             {
                 throw;
             }
+        }
+        public bool Login(String UserName, String Password)
+        {
+            try
+            {
+
+            }
+
         }
 
     }

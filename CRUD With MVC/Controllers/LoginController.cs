@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DapperDataAccessLayer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -19,9 +20,13 @@ namespace CRUD_With_MVC.Controllers
     {
         private readonly string EmailId;
         private readonly string Password;
+        private readonly IRegistrationRepository _reg;
+        private readonly string _configuration;
       
-        public LoginController(IConfiguration configuration)
+        public LoginController(IConfiguration configuration, IRegistrationRepository reg)
         {
+            _reg = reg;
+            _configuration = configuration.GetConnectionString("DbConnection");
             EmailId = configuration.GetValue<string>("Login:Username");
             Password = configuration.GetValue<string>("Login:Password");
 
@@ -36,17 +41,29 @@ namespace CRUD_With_MVC.Controllers
         {
             try
             {
-                
-                if (log.EmailId ==EmailId && log.Password ==Password)
+                var outputreg = _reg.Login(log.EmailId, log.Password);
+
+                if(outputreg==true)
                 {
                     return Redirect("/VehicleMVC/index");
                 }
                 else
                 {
-                    ModelState.AddModelError("Password","Invalid EmailId or password");
+                    ModelState.AddModelError("Password", "Invalid EmailId or password");
                     return View("LoginPage");
+
                 }
-            
+
+                //if (log.EmailId ==EmailId && log.Password ==Password)
+                //{
+                //    return Redirect("/VehicleMVC/index");
+                //}
+                //else
+                //{
+                //    ModelState.AddModelError("Password","Invalid EmailId or password");
+                //    return View("LoginPage");
+                //}
+
             }
             catch
             {

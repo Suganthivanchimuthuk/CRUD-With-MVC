@@ -33,6 +33,7 @@ namespace CRUDWithMVC
             services.AddTransient<IVehicleInfoRepository, VehicleInfoRepository>();
             services.AddTransient<ILocationRepository, LocationRepository>();
             services.AddDbContext<SampleDbContext>(options => options.UseSqlServer());  
+            services.AddTransient<IRegistrationRepository,RegistrationRepository>();
             
             services.AddControllersWithViews();
         }
