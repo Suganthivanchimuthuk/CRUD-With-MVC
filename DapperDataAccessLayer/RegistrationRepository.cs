@@ -41,8 +41,21 @@ namespace DapperDataAccessLayer
         {
             try
             {
+                var output = _context.Registration.FromSqlRaw<Registration>($"exec VerifyPassword '{UserName}',{Password}'").ToList();
 
+                if(output != null || output.Count > 0)               
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }catch(Exception ex)
+            {
+                throw;
             }
+           
 
         }
 

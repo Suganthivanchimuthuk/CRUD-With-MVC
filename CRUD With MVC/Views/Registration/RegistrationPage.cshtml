@@ -1,0 +1,42 @@
+﻿@model DapperDataAccessLayer.Registration
+
+
+@{
+    Layout = null;
+}
+<html>
+<body style="background-color:gray;">
+    <br>
+    <center>
+        <br>
+        <br>
+        <h1 style="color:Tomato;">LOGIN FORM</h1>
+        <br>
+    </center>
+
+    <form asp-action="Authentication" method="post">
+        <div>
+            <Center>
+                <input asp-for=" UserName" type="text" name=" UserName" placeholder="Enter your  UserName" required>
+                <span asp-validation-for=" UserName"></span>
+            </Center>
+        </div><br />
+        <div>
+            <center>
+                <input asp-for="Password" type="password" name="password" placeholder="Password" required>
+                <span asp-validation-for="Password"></span>
+            </center>
+            <center>
+                <input asp-for="Password" type="password" name="ConfirmPassword" placeholder="ConfirmPassword" required>
+                <span asp-validation-for="ConfirmPassword"></span>
+            </center>
+
+
+        </div><br />
+
+        <center>
+            <input type="submit" value="Register">
+        </center>
+    </form>
+</body>
+</html>

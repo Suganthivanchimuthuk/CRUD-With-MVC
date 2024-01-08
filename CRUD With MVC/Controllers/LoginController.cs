@@ -54,15 +54,15 @@ namespace CRUD_With_MVC.Controllers
 
                 }
 
-                //if (log.EmailId ==EmailId && log.Password ==Password)
-                //{
-                //    return Redirect("/VehicleMVC/index");
-                //}
-                //else
-                //{
-                //    ModelState.AddModelError("Password","Invalid EmailId or password");
-                //    return View("LoginPage");
-                //}
+                if (log.EmailId == EmailId && log.Password == Password)
+                {
+                    return Redirect("/VehicleMVC/index");
+                }
+                else
+                {
+                    ModelState.AddModelError("Password", "Invalid EmailId or password");
+                    return View("LoginPage");
+                }
 
             }
             catch
