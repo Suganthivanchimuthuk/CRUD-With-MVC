@@ -16,14 +16,23 @@ namespace DapperDataAccessLayer
             _context = context;
         }
 
-        public Registration FindByNumber(long number)
-        {
-            throw new NotImplementedException();
-        }
+        //public Registration FindByNumber(long number)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public IEnumerable<Registration> GetRegistrations()
         {
-            throw new NotImplementedException();
+            try
+            {
+                IEnumerable<Registration> result = _context.Registration.FromSqlRaw<Registration>($" exec GetallReg ");
+                return result.ToList();
+            }
+            catch(Exception ex)
+            {
+                throw new NotImplementedException();
+            }
+           
         }
 
         public void Insert(Registration reg)
@@ -41,9 +50,9 @@ namespace DapperDataAccessLayer
         {
             try
             {
-                var output = _context.Registration.FromSqlRaw<Registration>($"exec VerifyPassword '{UserName}',{Password}'").ToList();
+                var output = _context.Registration.FromSqlRaw<Registration>($"exec  VerifyPassword '{UserName}','{Password}'").ToList();
 
-                if(output != null || output.Count > 0)               
+                if(output.Count>0 & output!=null)             
                 {
                     return true;
                 }

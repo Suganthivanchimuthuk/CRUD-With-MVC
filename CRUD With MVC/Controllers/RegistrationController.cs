@@ -9,33 +9,20 @@ using System.Threading.Tasks;
 
 namespace CRUD_With_MVC.Controllers
 {
-    public class Registration
-    {
-
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
-
-    }
+ 
     public class RegistrationController : Controller
     {
-        private readonly string UserName;
-        private readonly string Password;
-        private readonly string ConfirmPassword;
-     
-
-        //public RegistrationController(IConfiguration configuration, IRegistrationRepository reg)
-        //{
-        //    _reg = reg;
-        //    _configuration = configuration.GetConnectionString("DbConnection");
-        //    UserName = configuration.GetValue<string>("Login:Username");
-        //    Password = configuration.GetValue<string>("Login:Password");
-        //    Password = configuration.GetValue<string>("Login:Password");
-        //    ConfirmPassword = configuration.GetValue<string>("Login:ConfirmPassword");
+                private readonly IRegistrationRepository _reg;
+        private readonly string _configuration;
+        public RegistrationController(IRegistrationRepository reg, IConfiguration configuration)
+        {
+            _reg = reg;
+            _configuration = configuration.GetConnectionString("DbConnection");
+        }
 
 
-            // GET: RegistrationController
-            public ActionResult Index()
+        // GET: RegistrationController
+        public ActionResult Index()
             {
                 return View("RegistrationPage");
             }

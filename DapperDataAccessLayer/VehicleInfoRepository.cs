@@ -127,7 +127,7 @@ namespace DapperDataAccessLayer
                 //  var connectionString = "Data source=desktop-blbgehj\\sqlexpress;initial catalog=batch7;user id=sa;password=Anaiyaan@123;";
                 var con = new SqlConnection(connectionString);
                 con.Open();
-                var selectQuery = $"exec  FindByNum {id}";
+                var selectQuery = $"exec FindByNum {id}";
                 var Find = con.QueryFirstOrDefault<VehicleInfo>(selectQuery);
                 con.Close();
                 return Find;

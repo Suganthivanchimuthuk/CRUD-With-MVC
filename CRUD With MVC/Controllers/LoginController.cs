@@ -18,17 +18,24 @@ namespace CRUD_With_MVC.Controllers
     }
     public class LoginController : Controller
     {
-        private readonly string EmailId;
-        private readonly string Password;
+        //private readonly string EmailId;
+        //private readonly string Password;
         private readonly IRegistrationRepository _reg;
         private readonly string _configuration;
-      
-        public LoginController(IConfiguration configuration, IRegistrationRepository reg)
+
+        //public LoginController(IConfiguration configuration)
+        //{
+        //    _Email = configuration.GetValue<string>("Login:Username");
+        //    _password = configuration.GetValue<string>("Login:PasswordKey");
+
+        //}
+
+        public LoginController( IRegistrationRepository reg,IConfiguration configuration)
         {
             _reg = reg;
             _configuration = configuration.GetConnectionString("DbConnection");
-            EmailId = configuration.GetValue<string>("Login:Username");
-            Password = configuration.GetValue<string>("Login:Password");
+            //EmailId = configuration.GetValue<string>("Login:Username");
+            //Password = configuration.GetValue<string>("Login:Password");
 
         }
         // GET: LoginController
@@ -38,6 +45,7 @@ namespace CRUD_With_MVC.Controllers
         }
 
         public ActionResult Authentication(login log)
+        
         {
             try
             {
@@ -54,18 +62,18 @@ namespace CRUD_With_MVC.Controllers
 
                 }
 
-                if (log.EmailId == EmailId && log.Password == Password)
-                {
-                    return Redirect("/VehicleMVC/index");
-                }
-                else
-                {
-                    ModelState.AddModelError("Password", "Invalid EmailId or password");
-                    return View("LoginPage");
-                }
+                //if (log.EmailId == EmailId && log.Password == Password)
+                //{
+                //    return Redirect("/VehicleMVC/index");
+                //}
+                //else
+                //{
+                //    ModelState.AddModelError("Password", "Invalid EmailId or password");
+                //    return View("LoginPage");
+                //}
 
             }
-            catch
+            catch(Exception ex)
             {
                 return View("Error");
             }

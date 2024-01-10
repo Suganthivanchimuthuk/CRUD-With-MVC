@@ -13,6 +13,7 @@ namespace DapperDataAccessLayer
         {
 
         }
+        
         public DbSet<Registration> Registration { get; set; }
     }
 }
