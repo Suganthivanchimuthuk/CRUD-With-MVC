@@ -12,7 +12,7 @@ namespace CRUD_With_MVC.Controllers
  
     public class RegistrationController : Controller
     {
-                private readonly IRegistrationRepository _reg;
+        private readonly IRegistrationRepository _reg;
         private readonly string _configuration;
         public RegistrationController(IRegistrationRepository reg, IConfiguration configuration)
         {
@@ -28,74 +28,94 @@ namespace CRUD_With_MVC.Controllers
             }
 
 
-            // GET: RegistrationController/Details/5
-            public ActionResult Details(int id)
+        // GET: RegistrationController/Details/5
+        public ActionResult AuthenticationR(Registration reg)
+        {
+            try
+            {
+                var resultreg = _reg.Register(reg);
+
+
+                if (resultreg == true)
+                {
+                    _reg.Insert(reg);
+
+                    return Redirect("/Login/index");
+                }
+                else
+                {
+                    ModelState.AddModelError("ConfirmPassword", "Already Exist");
+                    return View("RegistrationPage");
+                }
+
+            }
+            catch(Exception ex)
+            {
+                return View("Error");
+            }
+        }
+
+        // GET: RegistrationController/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: RegistrationController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
             {
                 return View();
             }
+        }
 
-            // GET: RegistrationController/Create
-            public ActionResult Create()
+        // GET: RegistrationController/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        // POST: RegistrationController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
             {
                 return View();
             }
+        }
 
-            // POST: RegistrationController/Create
-            [HttpPost]
-            [ValidateAntiForgeryToken]
-            public ActionResult Create(IFormCollection collection)
+        // GET: RegistrationController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        // POST: RegistrationController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            try
             {
-                try
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-                catch
-                {
-                    return View();
-                }
+                return RedirectToAction(nameof(Index));
             }
-
-            // GET: RegistrationController/Edit/5
-            public ActionResult Edit(int id)
+            catch
             {
                 return View();
-            }
-
-            // POST: RegistrationController/Edit/5
-            [HttpPost]
-            [ValidateAntiForgeryToken]
-            public ActionResult Edit(int id, IFormCollection collection)
-            {
-                try
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-                catch
-                {
-                    return View();
-                }
-            }
-
-            // GET: RegistrationController/Delete/5
-            public ActionResult Delete(int id)
-            {
-                return View();
-            }
-
-            // POST: RegistrationController/Delete/5
-            [HttpPost]
-            [ValidateAntiForgeryToken]
-            public ActionResult Delete(int id, IFormCollection collection)
-            {
-                try
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-                catch
-                {
-                    return View();
-                }
             }
         }
     }
-
+}

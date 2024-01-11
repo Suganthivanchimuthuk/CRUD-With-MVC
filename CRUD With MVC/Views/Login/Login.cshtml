@@ -1,0 +1,43 @@
+﻿@model CRUD_With_MVC.Controllers.login
+
+
+@{
+    Layout = null;
+}
+<html>
+<body style="background-color:lightseagreen;">
+    <br>
+    <center>
+        <br>
+        <br>
+        <h1 style="color:Tomato;">LOGIN FORM</h1>
+        <br>
+    </center>
+
+    <form asp-action="Authentication" method="post">
+        <div>
+            <Center>
+                <input asp-for="EmailId" type="text" name="emailId" placeholder="Enter your EmailId" required>
+                <span asp-validation-for="EmailId"></span>
+            </Center>
+        </div><br />
+        <div>
+            <center>
+                <input asp-for="Password" type="password" name="password" placeholder="Password" required>
+                <span asp-validation-for="Password"></span>
+            </center>
+
+        </div><br />
+
+        <center>
+            <input type="submit" value="login">
+
+        </center>
+        <div class="nav-item">
+            <center>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Registration" asp-action="Index">signup</a>
+            </center>
+        </div>
+    </form>
+</body>
+</html>

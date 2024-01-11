@@ -28,18 +28,18 @@ namespace DapperDataAccessLayer
                 IEnumerable<Registration> result = _context.Registration.FromSqlRaw<Registration>($" exec GetallReg ");
                 return result.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new NotImplementedException();
             }
-           
+
         }
 
         public void Insert(Registration reg)
         {
             try
             {
-                _context.Database.ExecuteSqlRaw($" exec Insertdata '{reg.UserName}','{reg.Password}'");
+                _context.Database.ExecuteSqlRaw($" exec Insertdata '{reg.UserName}','{reg.Password}','{reg.ConfirmPassword}'");
             }
             catch (Exception ex)
             {
@@ -52,7 +52,7 @@ namespace DapperDataAccessLayer
             {
                 var output = _context.Registration.FromSqlRaw<Registration>($"exec  VerifyPassword '{UserName}','{Password}'").ToList();
 
-                if(output.Count>0 & output!=null)             
+                if (output.Count > 0 & output != null)
                 {
                     return true;
                 }
@@ -60,13 +60,53 @@ namespace DapperDataAccessLayer
                 {
                     return false;
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw;
             }
-           
-
         }
+        public bool Register(Registration reg)
+        {
+            try
+            {
+                var res = _context.Registration.FromSqlRaw<Registration>($"exec VerifyRegistration '{reg.UserName}','{reg.Password}','{reg.ConfirmPassword}'").ToList();
 
+                if (res.Count > 0 & res != null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
+            
+            
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

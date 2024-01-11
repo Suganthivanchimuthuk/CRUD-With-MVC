@@ -41,7 +41,7 @@ namespace CRUD_With_MVC.Controllers
         // GET: LoginController
         public ActionResult Index()
         {
-            return View("LoginPage");
+            return View("Login");
         }
 
         public ActionResult Authentication(login log)
@@ -57,8 +57,8 @@ namespace CRUD_With_MVC.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("Password", "Invalid EmailId or password");
-                    return View("LoginPage");
+                    ModelState.AddModelError("Password", "Invalid Email or password");
+                    return View("Login");
 
                 }
 
@@ -69,7 +69,7 @@ namespace CRUD_With_MVC.Controllers
                 //else
                 //{
                 //    ModelState.AddModelError("Password", "Invalid EmailId or password");
-                //    return View("LoginPage");
+                //    return View("Login");
                 //}
 
             }

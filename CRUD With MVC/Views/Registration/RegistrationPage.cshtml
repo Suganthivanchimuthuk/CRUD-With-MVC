@@ -5,20 +5,14 @@
     Layout = null;
 }
 <html>
-<body style="background-color:gray;">
+<body style="background-color:lawngreen;">
     <br>
-    <center>
-        <br>
-        <br>
-        <h1 style="color:Tomato;">Registration Form</h1>
-        <br>
-    </center>
 
-    <form asp-action="Authentication" method="post">
+    <form asp-action="AuthenticationR" method="post">
         <div>
             <Center>
-                <input asp-for=" UserName" type="text" name=" UserName" placeholder="Enter your  UserName" required>
-                <span asp-validation-for=" UserName"></span>
+                <input asp-for="UserName" type="text" name="UserName" placeholder="Enter UserName" required>
+                <span asp-validation-for="UserName"></span>
             </Center>
         </div><br />
         <div>
@@ -27,8 +21,10 @@
                 <span asp-validation-for="Password"></span>
             </center>
             <center>
+                <br>
                 <input asp-for="Password" type="password" name="ConfirmPassword" placeholder="ConfirmPassword" required>
                 <span asp-validation-for="ConfirmPassword"></span>
+                </br>
             </center>
 
 
