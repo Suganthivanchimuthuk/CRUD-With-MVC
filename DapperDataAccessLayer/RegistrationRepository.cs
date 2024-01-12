@@ -16,10 +16,18 @@ namespace DapperDataAccessLayer
             _context = context;
         }
 
-        //public Registration FindByNumber(long number)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public Registration FindByNumber(long number)
+        {
+            try
+            {
+                var result = _context.Registration.FromSqlRaw<Registration>($"exec FindByNumber {number}").ToList().FirstOrDefault();
+                return result;
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
 
         public IEnumerable<Registration> GetRegistrations()
         {
@@ -34,7 +42,7 @@ namespace DapperDataAccessLayer
             }
 
         }
-
+        
         public void Insert(Registration reg)
         {
             try
@@ -82,6 +90,17 @@ namespace DapperDataAccessLayer
                 }
             }
             catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        public void DeleteRegistration(long id)
+        {
+            try
+            {
+                var result = _context.Database.ExecuteSqlRaw($"exec DeleteRegistration{id}");
+            }
+            catch(Exception ex)
             {
                 throw;
             }

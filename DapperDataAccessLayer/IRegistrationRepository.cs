@@ -10,7 +10,7 @@ namespace DapperDataAccessLayer
     {
         public void Insert(Registration reg);
 
-        //public Registration FindByNumber(long number);
+        public Registration FindByNumber(long number);
         public IEnumerable<Registration> GetRegistrations();
 
         public bool Login(String UserName, String Password);

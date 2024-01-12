@@ -26,6 +26,12 @@ namespace CRUD_With_MVC.Controllers
             {
                 return View("RegistrationPage");
             }
+        public ActionResult List()
+        {
+            var res = _reg.GetRegistrations();
+            return View("List",res);
+
+        }
 
 
         // GET: RegistrationController/Details/5
@@ -58,63 +64,114 @@ namespace CRUD_With_MVC.Controllers
         // GET: RegistrationController/Create
         public ActionResult Create()
         {
-            return View();
+            try
+            {
+                return View("Create", new Registration());
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
+
 
         // POST: RegistrationController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Registration list)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var outputreg = _reg.Register(list);
+                if(outputreg==true)
+                {
+                    _reg.Insert(list);
+
+                    var result = _reg.GetRegistrations();
+                    return View("Create", result);
+                    //return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError("ConfirmPassword", "Already Exist");
+                    return View("Create", list);
+                }
+
             }
             catch
             {
-                return View();
+                return View("Error");
             }
         }
 
         // GET: RegistrationController/Edit/5
         public ActionResult Edit(int id)
-        {
-            return View();
+        {           
+                var res = _reg.FindByNumber(id);
+                return View("Edit",res);            
+         
         }
 
         // POST: RegistrationController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Registration reg)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var outputreg = _reg.Register(reg);
+                if (outputreg == true)
+                {
+                     _reg.UpdateReg(id, reg);
+                    var list = _reg.GetRegistrations();                  
+                   
+                    return View("Edit", list);
+
+                    //return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError("ConfirmPassword", "Already Exist");
+                    return View("Edit", list);
+                }
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
+
         }
 
         // GET: RegistrationController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+                var res = _reg.FindByNumber(id);
+                return View("Delete",res);
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
+    
 
         // POST: RegistrationController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int Registrationid)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _reg.DeleteRegistration(Registrationid);
+
+                var list = _reg.GetRegistrations();
+                return View("View", list);
             }
             catch
             {
-                return View();
+                return View("Error");
             }
         }
     }
