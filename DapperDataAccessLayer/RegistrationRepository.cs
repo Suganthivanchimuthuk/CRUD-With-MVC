@@ -20,10 +20,10 @@ namespace DapperDataAccessLayer
         {
             try
             {
-                var result = _context.Registration.FromSqlRaw<Registration>($"exec FindByNumber {number}").ToList().FirstOrDefault();
+                var result = _context.Registration.FromSqlRaw<Registration>($"exec FindbyId {number}").ToList().FirstOrDefault();
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -38,11 +38,11 @@ namespace DapperDataAccessLayer
             }
             catch (Exception ex)
             {
-                throw new NotImplementedException();
+                throw;
             }
 
         }
-        
+
         public void Insert(Registration reg)
         {
             try
@@ -98,9 +98,21 @@ namespace DapperDataAccessLayer
         {
             try
             {
-                var result = _context.Database.ExecuteSqlRaw($"exec DeleteRegistration{id}");
+                var result = _context.Database.ExecuteSqlRaw($"exec DeleteRegistration {id}");
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        public void UpdateReg(long id, Registration reg)
+        {
+            try
+            {
+                var record = _context.Database.ExecuteSqlRaw($"exec UpdateReg {id},'{reg.UserName}','{reg.Password}','{reg.ConfirmPassword}'");
+
+            }
+            catch (Exception ex)
             {
                 throw;
             }

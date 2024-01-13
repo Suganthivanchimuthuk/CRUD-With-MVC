@@ -32,7 +32,18 @@ namespace CRUD_With_MVC.Controllers
             return View("List",res);
 
         }
-
+        public ActionResult Details(int id)
+        {
+            try
+            {
+                var details = _reg.FindByNumber(id);
+                    return View("Details", details);
+            }
+            catch(Exception ex)
+            {
+                return View("Error");
+            }
+        }
 
         // GET: RegistrationController/Details/5
         public ActionResult AuthenticationR(Registration reg)
@@ -68,7 +79,8 @@ namespace CRUD_With_MVC.Controllers
             {
                 return View("Create", new Registration());
             }
-            catch
+            catch(Exception ex)
+
             {
                 return View("Error");
             }
@@ -83,12 +95,12 @@ namespace CRUD_With_MVC.Controllers
             try
             {
                 var outputreg = _reg.Register(list);
-                if(outputreg==true)
-                {
+                if(outputreg == true)
+                {       
                     _reg.Insert(list);
 
                     var result = _reg.GetRegistrations();
-                    return View("Create", result);
+                    return View("List", result);
                     //return RedirectToAction(nameof(Index));
                 }
                 else
@@ -98,7 +110,7 @@ namespace CRUD_With_MVC.Controllers
                 }
 
             }
-            catch
+            catch(Exception ex)
             {
                 return View("Error");
             }
@@ -119,21 +131,20 @@ namespace CRUD_With_MVC.Controllers
         {
             try
             {
-                var outputreg = _reg.Register(reg);
-                if (outputreg == true)
-                {
-                     _reg.UpdateReg(id, reg);
-                    var list = _reg.GetRegistrations();                  
+
+                _reg.UpdateReg(id, reg);
+
+                var list = _reg.GetRegistrations();                  
                    
-                    return View("Edit", list);
+                    return View("List", list);
 
                     //return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    ModelState.AddModelError("ConfirmPassword", "Already Exist");
-                    return View("Edit", list);
-                }
+                //}
+                //else
+                //{
+                //    ModelState.AddModelError("ConfirmPassword", "Already Exist");
+                //    return View("Edit", reg);
+                //}
             }
             catch (Exception ex)
             {
@@ -150,7 +161,7 @@ namespace CRUD_With_MVC.Controllers
                 var res = _reg.FindByNumber(id);
                 return View("Delete",res);
             }
-            catch
+            catch (Exception ex)
             {
                 return View("Error");
             }
@@ -160,16 +171,16 @@ namespace CRUD_With_MVC.Controllers
         // POST: RegistrationController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int Registrationid)
+        public ActionResult DeleteRec(int RegistrationId)
         {
             try
             {
-                _reg.DeleteRegistration(Registrationid);
+                _reg.DeleteRegistration(RegistrationId);
 
                 var list = _reg.GetRegistrations();
-                return View("View", list);
+                return View("List", list);
             }
-            catch
+            catch (Exception ex)
             {
                 return View("Error");
             }

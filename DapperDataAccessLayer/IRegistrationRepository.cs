@@ -12,7 +12,8 @@ namespace DapperDataAccessLayer
 
         public Registration FindByNumber(long number);
         public IEnumerable<Registration> GetRegistrations();
-
+        public void DeleteRegistration(long id);
+        public void UpdateReg(long id, Registration reg);
         public bool Login(String UserName, String Password);
         public bool Register(Registration reg);
 
